@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 465057427}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Fl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -768,7 +768,7 @@ GameObject:
   - component: {fileID: 486793710}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Fl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1320,7 +1320,7 @@ GameObject:
   - component: {fileID: 804901262}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Fl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2200,7 +2200,7 @@ GameObject:
   - component: {fileID: 1729051148}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Fl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2288,15 +2288,43 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
+      propertyPath: swipeVelocityPerTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568831796, guid: 34993209cc13e475999759793043db60, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3119862507923306962, guid: 34993209cc13e475999759793043db60,
         type: 3}
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 3119862507923306962, guid: 34993209cc13e475999759793043db60,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
         type: 3}
@@ -2311,7 +2339,7 @@ PrefabInstance:
     - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.285
       objectReference: {fileID: 0}
     - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
         type: 3}
@@ -2347,6 +2375,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119862507923306987, guid: 34993209cc13e475999759793043db60,
+        type: 3}
+      propertyPath: m_Mass
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34993209cc13e475999759793043db60, type: 3}
@@ -2898,17 +2931,17 @@ PrefabInstance:
     - target: {fileID: 9174941719303536906, guid: 711513570f9396644ae34e2a1dc5a471,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.02
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 9174941719303536906, guid: 711513570f9396644ae34e2a1dc5a471,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.37
+      value: 2.84
       objectReference: {fileID: 0}
     - target: {fileID: 9174941719303536906, guid: 711513570f9396644ae34e2a1dc5a471,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.63
+      value: -4.86
       objectReference: {fileID: 0}
     - target: {fileID: 9174941719303536906, guid: 711513570f9396644ae34e2a1dc5a471,
         type: 3}

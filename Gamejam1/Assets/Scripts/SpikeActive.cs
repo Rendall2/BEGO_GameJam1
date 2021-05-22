@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SpikeActive : MonoBehaviour
 {
+    SceneLoader sceneLoader;
     public GameObject[] spikes;
     // Start is called before the first frame update
     void Start()
     {
-       
-        
+        sceneLoader = FindObjectOfType<SceneLoader>();
     }
 
     // Update is called once per frame
@@ -25,6 +25,13 @@ public class SpikeActive : MonoBehaviour
             {
                 spikes[i].SetActive(true);
             }
+            StartCoroutine(LevelFailed());
         }
     }
+    IEnumerator LevelFailed()
+    {
+        yield return new WaitForSeconds(1);
+        sceneLoader.loadCurrentScene();
+    }
 }
+
