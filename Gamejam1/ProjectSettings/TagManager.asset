@@ -8,6 +8,8 @@ TagManager:
   - RoadRight
   - RoadLeft
   - Fl
+  - SpikeCube
+  - Spike
   layers:
   - Default
   - TransparentFX

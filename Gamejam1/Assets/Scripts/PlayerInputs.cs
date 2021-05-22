@@ -15,6 +15,8 @@ public class PlayerInputs : MonoBehaviour
     Vector2 currentSwipe;
     private int jumpCount = 0;
     SceneLoader sceneLoader;
+    public bool isLevelFailed = false;
+    public GameObject[] spikes;
 
 
     [Range (0.5f,10f)]
@@ -221,9 +223,19 @@ public class PlayerInputs : MonoBehaviour
             }
             StartCoroutine(LevelFailed());
         }
+
+        if (collision.gameObject.tag == "Spike")
+        {
+            for (int i = 0; i < spikes.Length; i++)
+            {
+                spikes[i].SetActive(true);
+            }
+            StartCoroutine(LevelFailed());
+        }
     }
     IEnumerator LevelFailed()
     {
+        isLevelFailed = true;
         yield return new WaitForSeconds(1);
         sceneLoader.loadCurrentScene();
     }
@@ -241,16 +253,5 @@ public class PlayerInputs : MonoBehaviour
         }
     }
 
-    private void ControlXaxis()
-    {
-        if(transform.position.x > 1.06f)
-        {
-            transform.position = new Vector3 (1.06f, transform.position.y, transform.position.z);
-        }
 
-        if (transform.position.x < -1.085f)
-        {
-            transform.position = new Vector3(-1.085f, transform.position.y, transform.position.z);
-        }
-    }
 }

@@ -7,7 +7,6 @@ public class LevelChanger : MonoBehaviour
 {
 
     SceneLoader sceneLoader;
-    bool levelFinished = false;
 
     // Start is called before the first frame update
     void Start()
