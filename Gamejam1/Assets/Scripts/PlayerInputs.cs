@@ -57,6 +57,8 @@ public class PlayerInputs : MonoBehaviour
             Run();
         }
 
+        ControlXaxis();
+
     }
     private void Update()
     {
@@ -206,6 +208,19 @@ public class PlayerInputs : MonoBehaviour
         if(collision.gameObject.tag == "Fl")
         {
             jumpCount = 0;
+        }
+    }
+
+    private void ControlXaxis()
+    {
+        if(transform.position.x > 1.06f)
+        {
+            transform.position = new Vector3 (1.06f, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.x < -1.085f)
+        {
+            transform.position = new Vector3(-1.085f, transform.position.y, transform.position.z);
         }
     }
 }

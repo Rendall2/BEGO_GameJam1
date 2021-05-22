@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 3119862507923306962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 5952095501245879933}
   - {fileID: 1568831799}
@@ -165,10 +165,10 @@ MonoBehaviour:
   isMid: 1
   runSpeed: 4
   swipeSensitivity: 0.5
-  swipeVelocityPerTime: 2
+  swipeVelocityPerTime: 0.7
   transitionTime: 0.5
-  runLeftAnimSpeed: 1
-  runRightAnimSpeed: 1
+  runLeftAnimSpeed: 0.5
+  runRightAnimSpeed: 0.5
   jumpForce: 120
   jumpAnimSpeed: 1
 --- !u!1001 &5952095501245484221
