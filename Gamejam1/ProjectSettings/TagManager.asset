@@ -3,12 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Fire
-  - RoadLeft
-  - RoadRight
-  - RoadMiddle
-  - Spike
+  tags: []
   layers:
   - Default
   - TransparentFX
