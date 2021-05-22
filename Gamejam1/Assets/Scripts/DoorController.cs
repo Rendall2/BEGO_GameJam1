@@ -64,7 +64,7 @@ public class DoorController : MonoBehaviour
 
             if (doorState == DoorState.Closed && !doorAnim.isPlaying)
             {
-                 doorAnim.Play("Door_Open");
+                 doorAnim.Play("Open_Door");
                  doorState = DoorState.Opened;
                 
             }

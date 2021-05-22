@@ -499,7 +499,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4767187543962158}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!33 &33472557299656288
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -561,8 +561,9 @@ GameObject:
   - component: {fileID: 111727103889308754}
   - component: {fileID: 205746683859549308}
   - component: {fileID: 65047746808465334}
+  - component: {fileID: 1705430928}
   m_Layer: 0
-  m_Name: Aparment_Door
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,9 +601,8 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: ccb150aa6f64f324fbfd55db7b3767e8, type: 3}
   m_Animations:
+  - {fileID: 7400000, guid: ee11c8e494579ba42b5396bfec10a384, type: 2}
   - {fileID: 7400000, guid: ccb150aa6f64f324fbfd55db7b3767e8, type: 3}
-  - {fileID: 7400002, guid: ccb150aa6f64f324fbfd55db7b3767e8, type: 3}
-  - {fileID: 7400004, guid: ccb150aa6f64f324fbfd55db7b3767e8, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -656,6 +656,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4858832, y: 2.611988, z: 0.15106297}
   m_Center: {x: -0.67737794, y: 1.2975931, z: 0.05713415}
+--- !u!95 &1705430928
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611523936073156}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cead970ab3ece9148838d9ea8835b61a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1612472092784080
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +706,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4370218842651164}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!33 &33753791503288620
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -768,7 +787,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4767187543962158}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!33 &33071035546009280
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -851,7 +870,7 @@ Transform:
   - {fileID: 4311704889786336}
   m_Father: {fileID: 4264754401751234}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -70.55999, z: 0}
 --- !u!33 &33679407071843438
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -932,7 +951,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4370218842651164}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!33 &33570199407015926
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1013,7 +1032,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4852327245166008}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!33 &33197388237685140
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1094,7 +1113,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4852327245166008}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!33 &33144931557273328
 MeshFilter:
   m_ObjectHideFlags: 0
