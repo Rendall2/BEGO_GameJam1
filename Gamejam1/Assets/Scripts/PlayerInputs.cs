@@ -14,6 +14,7 @@ public class PlayerInputs : MonoBehaviour
     Vector2 lastPressPos;
     Vector2 currentSwipe;
     private int jumpCount = 0;
+    SceneLoader sceneLoader;
 
 
     [Range (0.5f,10f)]
@@ -24,7 +25,7 @@ public class PlayerInputs : MonoBehaviour
     [Range (0.01f,1f)]
     public float swipeSensitivity = 0.5f;
 
-    [Range(0.5f, 100f)]
+    [Range(0.3f, 5f)]
     public float swipeVelocityPerTime = 2.9f;
     [Range(0.01f, 1f)]
     public float transitionTime = 0.2f;
@@ -46,6 +47,7 @@ public class PlayerInputs : MonoBehaviour
     void Start()
     {
         playerAnimator = GetComponentInChildren<Animator>();
+        sceneLoader = FindObjectOfType<SceneLoader>();
     }
 
 
@@ -56,6 +58,8 @@ public class PlayerInputs : MonoBehaviour
         {
             Run();
         }
+
+        ControlXaxis();
 
     }
     private void Update()
@@ -206,6 +210,34 @@ public class PlayerInputs : MonoBehaviour
         if(collision.gameObject.tag == "Fl")
         {
             jumpCount = 0;
+        }
+
+        if (collision.gameObject.tag == "SpikeCube")
+        {
+            bool isActive = collision.gameObject.GetComponent<MeshRenderer>().enabled;
+            if (!isActive)
+            {
+                collision.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            }
+            StartCoroutine(LevelFailed());
+        }
+    }
+    IEnumerator LevelFailed()
+    {
+        yield return new WaitForSeconds(1);
+        sceneLoader.loadCurrentScene();
+    }
+
+    private void ControlXaxis()
+    {
+        if (transform.position.x > 1.06f)
+        {
+            transform.position = new Vector3(1.06f, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.x < -1.085f)
+        {
+            transform.position = new Vector3(-1.085f, transform.position.y, transform.position.z);
         }
     }
 }
