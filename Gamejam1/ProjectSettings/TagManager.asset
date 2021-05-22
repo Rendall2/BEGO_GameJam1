@@ -10,6 +10,8 @@ TagManager:
   - Fl
   - SpikeCube
   - Spike
+  - FakeRoad
+  - Fall
   layers:
   - Default
   - TransparentFX

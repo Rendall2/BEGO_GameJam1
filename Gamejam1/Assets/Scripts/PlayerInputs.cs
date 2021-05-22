@@ -9,6 +9,7 @@ public class PlayerInputs : MonoBehaviour
     public bool isRight = false;
     public bool isLeft = false;
     public bool isMid = true;
+    bool isActive;
     private bool isRunning = true;
     Vector2 firstPressPos;
     Vector2 lastPressPos;
@@ -17,7 +18,7 @@ public class PlayerInputs : MonoBehaviour
     SceneLoader sceneLoader;
     public bool isLevelFailed = false;
     public GameObject[] spikes;
-
+    Renderer[] roads;
 
     [Range (0.5f,10f)]
     public float runSpeed = 4f;
@@ -216,7 +217,7 @@ public class PlayerInputs : MonoBehaviour
 
         if (collision.gameObject.tag == "SpikeCube")
         {
-            bool isActive = collision.gameObject.GetComponent<MeshRenderer>().enabled;
+            isActive = collision.gameObject.GetComponent<MeshRenderer>().enabled;
             if (!isActive)
             {
                 collision.gameObject.GetComponent<MeshRenderer>().enabled = true;
@@ -232,14 +233,31 @@ public class PlayerInputs : MonoBehaviour
             }
             StartCoroutine(LevelFailed());
         }
+        
     }
+   
     IEnumerator LevelFailed()
     {
         isLevelFailed = true;
         yield return new WaitForSeconds(1);
         sceneLoader.loadCurrentScene();
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "FakeRoad")
+        {
 
+            roads = other.gameObject.GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in roads)
+            {
+                r.enabled = !r.enabled;
+            }
+        }
+        if (other.gameObject.tag == "Fall")
+        {
+            StartCoroutine(LevelFailed());
+        }
+    }
     private void ControlXaxis()
     {
         if (transform.position.x > 1.06f)
