@@ -9,6 +9,8 @@ public class PlayerInputs : MonoBehaviour
     public bool isRight = false;
     public bool isLeft = false;
     public bool isMid = true;
+    bool isActive;
+    bool finalActive = false;
     private bool isRunning = true;
     Vector2 firstPressPos;
     Vector2 lastPressPos;
@@ -17,15 +19,10 @@ public class PlayerInputs : MonoBehaviour
     SceneLoader sceneLoader;
     public bool isLevelFailed = false;
     public GameObject[] spikes;
-    GameManager gameManager;
-    private Canvas tapToPlayCanvas;
-    private Canvas levelCompletedCanvas;
-    private Canvas gameOverCanvas;
-    private ParticleSystem particleEffect;
-    FollowPlayer camScript;
-
-
-
+    public GameObject[] cubeSpikes;
+    Renderer[] roads;
+    public GameObject finalTrap;
+    public GameObject finalTrap1;
     [Range (0.5f,10f)]
     public float runSpeed = 4f;
 
@@ -57,61 +54,33 @@ public class PlayerInputs : MonoBehaviour
     {
         playerAnimator = GetComponentInChildren<Animator>();
         sceneLoader = FindObjectOfType<SceneLoader>();
-        tapToPlayCanvas = GameObject.FindWithTag("TapToPlayCanvas").GetComponent<Canvas>();
-        gameOverCanvas = GameObject.FindWithTag("GameOverCanvas").GetComponent<Canvas>();
-        levelCompletedCanvas = GameObject.FindWithTag("LevelCompletedCanvas").GetComponent<Canvas>();
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        gameManager.setGameOver(false);
-        tapToPlayCanvas.enabled = true;
-        gameOverCanvas.enabled = false;
-        levelCompletedCanvas.enabled = false;
-        particleEffect = transform.GetComponentInChildren<ParticleSystem>();
-        camScript = GameObject.FindWithTag("MainCamera").GetComponent <FollowPlayer>();
     }
 
 
     private void FixedUpdate()
     
     {
-        if (gameManager.getIsGameStarted())
+        if (isRunning == true)
         {
-            if (isRunning == true)
-            {
-                Run();
-            }
-
-            ControlXaxis();
+            Run();
         }
-        
+        if (finalActive)
+        {
+            Debug.Log("girdi");
+            finalTrap.transform.Translate(Vector3.right * Time.deltaTime * 10);
+            finalTrap1.transform.Translate(Vector3.right * Time.deltaTime * 10);
+        }
+        ControlXaxis();
 
     }
     private void Update()
     {
-        if (gameManager.getGameOver() == false && gameManager.getIsLevelCompleted() == false)
-        {
-            Swipe();
-        }
-
-        
-
-    }
-
-    public void OnRetryButtonTapped()
-    {
-        gameManager.setGameOver(false);
-        PlayAgain();
-    }
-
-    public void OnNextLevelButtonTapped()
-    {
-        gameManager.setIsLevelCompleted(false);
-        StartCoroutine(NextLevelCoroutine());
+        Swipe();
         
     }
 
     private void Run()
     {
-        playerAnimator.SetTrigger("IsRunning");
         transform.Translate(transform.forward * runSpeed * Time.deltaTime);
     }
 
@@ -119,8 +88,6 @@ public class PlayerInputs : MonoBehaviour
     {
         if (Input.touches.Length > 0)
         {
-            gameManager.setIsGameStarted(true);
-            tapToPlayCanvas.enabled = false;
             Touch t = Input.GetTouch(0);
             if (t.phase == TouchPhase.Began)
             {
@@ -251,34 +218,23 @@ public class PlayerInputs : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Fl")
+        if(collision.gameObject.tag == "Fl")
         {
             jumpCount = 0;
         }
-    }
-    private void OnCollisionStay(Collision collision)
-    {
-
 
         if (collision.gameObject.tag == "SpikeCube")
         {
-            bool isActive = collision.gameObject.GetComponent<MeshRenderer>().enabled;
+            isActive = collision.gameObject.GetComponent<MeshRenderer>().enabled;
             if (!isActive)
             {
                 collision.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                for (int i = 0; i < cubeSpikes.Length; i++)
+                {
+                    cubeSpikes[i].SetActive(true);
+                }
             }
-
-            if(particleEffect.isPlaying == false)
-            {
-                StartCoroutine(PlayEffect());
-            }
-         
-            gameManager.setGameOver(true);
-            isRunning = false;
-            playerAnimator.ResetTrigger("IsRunning");
-            playerAnimator.SetTrigger("IsDie");
-            gameOverCanvas.enabled = true;
-            camScript.enabled = false;
+            StartCoroutine(LevelFailed());
         }
 
         if (collision.gameObject.tag == "Spike")
@@ -287,62 +243,36 @@ public class PlayerInputs : MonoBehaviour
             {
                 spikes[i].SetActive(true);
             }
-
-            if (particleEffect.isPlaying == false)
-            {
-                StartCoroutine(PlayEffect());
-            }
-            gameManager.setGameOver(true);
-            isRunning = false;
-            playerAnimator.ResetTrigger("IsRunning");
-            playerAnimator.SetTrigger("IsDie");
-            gameOverCanvas.enabled = true;
-            camScript.enabled = false;
-
+            StartCoroutine(LevelFailed());
         }
+        
     }
+   
     IEnumerator LevelFailed()
     {
-        if (gameManager.getGameOver() == false)
+        isLevelFailed = true;
+        yield return new WaitForSeconds(1);
+        sceneLoader.loadCurrentScene();
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "FakeRoad")
         {
-            yield return new WaitForSeconds(0.3f);
-            sceneLoader.loadCurrentScene();
+
+            roads = other.gameObject.GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in roads)
+            {
+                r.enabled = !r.enabled;
+            }
         }
-
-    }
-
-    IEnumerator NextLevelCoroutine()
-    {
-        if (gameManager.getIsLevelCompleted() == false)
+        if (other.gameObject.tag == "Fall")
         {
-            yield return new WaitForSeconds(0.3f);
-            sceneLoader.loadNextScene();
+            StartCoroutine(LevelFailed());
         }
-
-    }
-
-    IEnumerator PlayEffect()
-    {
-        particleEffect.Play();
-        transform.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-        yield return new WaitForSeconds(1f);
-        particleEffect.Stop();
-        Destroy(particleEffect);
-    }
-
-    private void PlayAgain()
-    {
-        StartCoroutine("LevelFailed");
-    }
-
-    public void NextLevel()
-    {
-        isRunning = false;
-        playerAnimator.ResetTrigger("IsRunning");
-        playerAnimator.SetTrigger("IsDie");
-        gameManager.setIsLevelCompleted(true);
-        levelCompletedCanvas.enabled = true;
-        camScript.enabled = false;
+        if (other.gameObject.tag == "FinalTrap")
+        {
+            finalActive = true;
+        }
     }
     private void ControlXaxis()
     {
