@@ -12,6 +12,7 @@ TagManager:
   - Spike
   - FakeRoad
   - Fall
+  - FinalTrap
   layers:
   - Default
   - TransparentFX

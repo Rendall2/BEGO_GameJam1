@@ -10,6 +10,7 @@ public class PlayerInputs : MonoBehaviour
     public bool isLeft = false;
     public bool isMid = true;
     bool isActive;
+    bool finalActive = false;
     private bool isRunning = true;
     Vector2 firstPressPos;
     Vector2 lastPressPos;
@@ -18,8 +19,10 @@ public class PlayerInputs : MonoBehaviour
     SceneLoader sceneLoader;
     public bool isLevelFailed = false;
     public GameObject[] spikes;
+    public GameObject[] cubeSpikes;
     Renderer[] roads;
-
+    public GameObject finalTrap;
+    public GameObject finalTrap1;
     [Range (0.5f,10f)]
     public float runSpeed = 4f;
 
@@ -61,14 +64,19 @@ public class PlayerInputs : MonoBehaviour
         {
             Run();
         }
-
+        if (finalActive)
+        {
+            Debug.Log("girdi");
+            finalTrap.transform.Translate(Vector3.right * Time.deltaTime * 10);
+            finalTrap1.transform.Translate(Vector3.right * Time.deltaTime * 10);
+        }
         ControlXaxis();
 
     }
     private void Update()
     {
         Swipe();
-       
+        
     }
 
     private void Run()
@@ -221,6 +229,10 @@ public class PlayerInputs : MonoBehaviour
             if (!isActive)
             {
                 collision.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                for (int i = 0; i < cubeSpikes.Length; i++)
+                {
+                    cubeSpikes[i].SetActive(true);
+                }
             }
             StartCoroutine(LevelFailed());
         }
@@ -257,6 +269,10 @@ public class PlayerInputs : MonoBehaviour
         {
             StartCoroutine(LevelFailed());
         }
+        if (other.gameObject.tag == "FinalTrap")
+        {
+            finalActive = true;
+        }
     }
     private void ControlXaxis()
     {
@@ -270,6 +286,4 @@ public class PlayerInputs : MonoBehaviour
             transform.position = new Vector3(-1.085f, transform.position.y, transform.position.z);
         }
     }
-
-
 }
