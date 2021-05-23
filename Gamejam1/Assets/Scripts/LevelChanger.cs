@@ -21,7 +21,7 @@ public class LevelChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,7 +29,7 @@ public class LevelChanger : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerInput.NextLevel();
-            
+
         }
     }
 }

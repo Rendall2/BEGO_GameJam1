@@ -9,8 +9,6 @@ public class PlayerInputs : MonoBehaviour
     public bool isRight = false;
     public bool isLeft = false;
     public bool isMid = true;
-    bool isActive;
-    bool finalActive = false;
     private bool isRunning = true;
     Vector2 firstPressPos;
     Vector2 lastPressPos;
@@ -20,15 +18,26 @@ public class PlayerInputs : MonoBehaviour
     public bool isLevelFailed = false;
     public GameObject[] spikes;
     public GameObject[] cubeSpikes;
-    Renderer[] roads;
+    bool isActive;
+    bool finalActive = false;
     public GameObject finalTrap;
     public GameObject finalTrap1;
-    [Range (0.5f,10f)]
+    Renderer[] roads;
+    GameManager gameManager;
+    private Canvas tapToPlayCanvas;
+    private Canvas levelCompletedCanvas;
+    private Canvas gameOverCanvas;
+    private ParticleSystem particleEffect;
+    FollowPlayer camScript;
+
+
+
+    [Range(0.5f, 10f)]
     public float runSpeed = 4f;
 
 
 
-    [Range (0.01f,1f)]
+    [Range(0.01f, 1f)]
     public float swipeSensitivity = 0.5f;
 
     [Range(0.3f, 5f)]
@@ -54,33 +63,66 @@ public class PlayerInputs : MonoBehaviour
     {
         playerAnimator = GetComponentInChildren<Animator>();
         sceneLoader = FindObjectOfType<SceneLoader>();
+        tapToPlayCanvas = GameObject.FindWithTag("TapToPlayCanvas").GetComponent<Canvas>();
+        gameOverCanvas = GameObject.FindWithTag("GameOverCanvas").GetComponent<Canvas>();
+        levelCompletedCanvas = GameObject.FindWithTag("LevelCompletedCanvas").GetComponent<Canvas>();
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        gameManager.setGameOver(false);
+        tapToPlayCanvas.enabled = true;
+        gameOverCanvas.enabled = false;
+        levelCompletedCanvas.enabled = false;
+        particleEffect = transform.GetComponentInChildren<ParticleSystem>();
+        camScript = GameObject.FindWithTag("MainCamera").GetComponent<FollowPlayer>();
     }
 
 
     private void FixedUpdate()
-    
+
     {
-        if (isRunning == true)
+        if (gameManager.getIsGameStarted())
         {
-            Run();
+            if (isRunning == true)
+            {
+                Run();
+            }
+            if (finalActive)
+            {
+                finalTrap.transform.Translate(Vector3.right * Time.deltaTime * 10);
+                finalTrap1.transform.Translate(Vector3.right * Time.deltaTime * 10);
+            }
+
+            ControlXaxis();
         }
-        if (finalActive)
-        {
-            Debug.Log("girdi");
-            finalTrap.transform.Translate(Vector3.right * Time.deltaTime * 10);
-            finalTrap1.transform.Translate(Vector3.right * Time.deltaTime * 10);
-        }
-        ControlXaxis();
+
 
     }
     private void Update()
     {
-        Swipe();
-        
+        if (gameManager.getGameOver() == false && gameManager.getIsLevelCompleted() == false)
+        {
+            Swipe();
+        }
+
+
+
+    }
+
+    public void OnRetryButtonTapped()
+    {
+        gameManager.setGameOver(false);
+        PlayAgain();
+    }
+
+    public void OnNextLevelButtonTapped()
+    {
+        gameManager.setIsLevelCompleted(false);
+        StartCoroutine(NextLevelCoroutine());
+
     }
 
     private void Run()
     {
+        playerAnimator.SetTrigger("IsRunning");
         transform.Translate(transform.forward * runSpeed * Time.deltaTime);
     }
 
@@ -88,6 +130,8 @@ public class PlayerInputs : MonoBehaviour
     {
         if (Input.touches.Length > 0)
         {
+            gameManager.setIsGameStarted(true);
+            tapToPlayCanvas.enabled = false;
             Touch t = Input.GetTouch(0);
             if (t.phase == TouchPhase.Began)
             {
@@ -100,9 +144,9 @@ public class PlayerInputs : MonoBehaviour
                 currentSwipe = new Vector2(lastPressPos.x - firstPressPos.x, lastPressPos.y - firstPressPos.y);
                 currentSwipe.Normalize();
                 //Swipe left
-                if (currentSwipe.x < 0 && ((currentSwipe.y <= swipeSensitivity)|| (-swipeSensitivity >= currentSwipe.y  )) && isLeft == false && IsInvoking("RunLeft") == false && IsInvoking("RunRight") == false)
+                if (currentSwipe.x < 0 && ((currentSwipe.y <= swipeSensitivity) || (-swipeSensitivity >= currentSwipe.y)) && isLeft == false && IsInvoking("RunLeft") == false && IsInvoking("RunRight") == false)
                 {
-                    
+
 
                     if (isRight) //saðdaysa ortaya geçti
                     {
@@ -115,7 +159,7 @@ public class PlayerInputs : MonoBehaviour
                         CancelInvoke("RunRight");
                         isRight = false;
                         isMid = true;
-                        
+
                     }
 
                     else if (isMid)  //ortadaysa sola geçti
@@ -128,13 +172,13 @@ public class PlayerInputs : MonoBehaviour
                         CancelInvoke("RunRight");
                         isMid = false;
                         isLeft = true;
-                        
+
                     }
 
                 }
 
                 //Swipe Right
-                else if (currentSwipe.x > 0 && ((currentSwipe.y <= swipeSensitivity) || (-swipeSensitivity >= currentSwipe.y )) && isRight == false && IsInvoking("RunLeft") == false && IsInvoking("RunRight") == false)
+                else if (currentSwipe.x > 0 && ((currentSwipe.y <= swipeSensitivity) || (-swipeSensitivity >= currentSwipe.y)) && isRight == false && IsInvoking("RunLeft") == false && IsInvoking("RunRight") == false)
                 {
 
 
@@ -162,7 +206,7 @@ public class PlayerInputs : MonoBehaviour
                         isRight = true;
                     }
 
-                    
+
                 }
 
                 //Swipe Up Jump
@@ -191,7 +235,7 @@ public class PlayerInputs : MonoBehaviour
         {
             CancelInvoke("RunLeft");
         }
-        
+
     }
 
     private void RunRight()
@@ -213,16 +257,18 @@ public class PlayerInputs : MonoBehaviour
     {
         jumpCount++;
         transform.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Fl")
+        if (collision.gameObject.tag == "Fl")
         {
             jumpCount = 0;
         }
-
+    }
+    private void OnCollisionStay(Collision collision)
+    {
         if (collision.gameObject.tag == "SpikeCube")
         {
             isActive = collision.gameObject.GetComponent<MeshRenderer>().enabled;
@@ -234,7 +280,18 @@ public class PlayerInputs : MonoBehaviour
                     cubeSpikes[i].SetActive(true);
                 }
             }
-            StartCoroutine(LevelFailed());
+
+            if (particleEffect.isPlaying == false)
+            {
+                StartCoroutine(PlayEffect());
+            }
+
+            gameManager.setGameOver(true);
+            isRunning = false;
+            playerAnimator.ResetTrigger("IsRunning");
+            playerAnimator.SetTrigger("IsDie");
+            gameOverCanvas.enabled = true;
+            camScript.enabled = false;
         }
 
         if (collision.gameObject.tag == "Spike")
@@ -243,17 +300,75 @@ public class PlayerInputs : MonoBehaviour
             {
                 spikes[i].SetActive(true);
             }
-            StartCoroutine(LevelFailed());
+
+            if (particleEffect.isPlaying == false)
+            {
+                StartCoroutine(PlayEffect());
+            }
+            gameManager.setGameOver(true);
+            isRunning = false;
+            playerAnimator.ResetTrigger("IsRunning");
+            playerAnimator.SetTrigger("IsDie");
+            gameOverCanvas.enabled = true;
+            camScript.enabled = false;
+
         }
-        
     }
-   
     IEnumerator LevelFailed()
     {
-        isLevelFailed = true;
-        yield return new WaitForSeconds(1);
-        sceneLoader.loadCurrentScene();
+        if (gameManager.getGameOver() == false)
+        {
+            yield return new WaitForSeconds(0.3f);
+            sceneLoader.loadCurrentScene();
+        }
+
     }
+
+    IEnumerator NextLevelCoroutine()
+    {
+        if (gameManager.getIsLevelCompleted() == false)
+        {
+            yield return new WaitForSeconds(0.3f);
+            sceneLoader.loadNextScene();
+        }
+
+    }
+
+    IEnumerator PlayEffect()
+    {
+        particleEffect.Play();
+        transform.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        particleEffect.Stop();
+    }
+
+    private void PlayAgain()
+    {
+        StartCoroutine("LevelFailed");
+    }
+
+    public void NextLevel()
+    {
+        isRunning = false;
+        playerAnimator.ResetTrigger("IsRunning");
+        playerAnimator.SetTrigger("IsDie");
+        gameManager.setIsLevelCompleted(true);
+        levelCompletedCanvas.enabled = true;
+        camScript.enabled = false;
+    }
+    private void ControlXaxis()
+    {
+        if (transform.position.x > 1.06f)
+        {
+            transform.position = new Vector3(1.06f, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.x < -1.085f)
+        {
+            transform.position = new Vector3(-1.085f, transform.position.y, transform.position.z);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "FakeRoad")
@@ -267,23 +382,20 @@ public class PlayerInputs : MonoBehaviour
         }
         if (other.gameObject.tag == "Fall")
         {
-            StartCoroutine(LevelFailed());
+            if (particleEffect.isPlaying == false)
+            {
+                StartCoroutine(PlayEffect());
+            }
+            gameManager.setGameOver(true);
+            isRunning = false;
+            playerAnimator.ResetTrigger("IsRunning");
+            playerAnimator.SetTrigger("IsDie");
+            gameOverCanvas.enabled = true;
+            camScript.enabled = false;
         }
         if (other.gameObject.tag == "FinalTrap")
         {
             finalActive = true;
-        }
-    }
-    private void ControlXaxis()
-    {
-        if (transform.position.x > 1.06f)
-        {
-            transform.position = new Vector3(1.06f, transform.position.y, transform.position.z);
-        }
-
-        if (transform.position.x < -1.085f)
-        {
-            transform.position = new Vector3(-1.085f, transform.position.y, transform.position.z);
         }
     }
 }
