@@ -331,9 +331,11 @@ GameObject:
   m_Component:
   - component: {fileID: 9188710172560678938}
   - component: {fileID: 9188710172560678937}
+  - component: {fileID: 794597998}
+  - component: {fileID: 794598000}
   m_Layer: 0
   m_Name: FinishDetector
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,8 +362,32 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9188710172560678939}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.2117243, y: 2.7709322, z: 1}
-  m_Center: {x: -1.4190187, y: 0.3791101, z: 0}
+  m_Size: {x: 3.2117243, y: 2.7709322, z: 0.31650543}
+  m_Center: {x: -1.4190187, y: 0.3791101, z: 0.34174728}
+--- !u!114 &794597998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188710172560678939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba9838e24847b34eac3fe7a766a752a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &794598000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188710172560678939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a23759c676e8eb44b84741f9d6a21459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

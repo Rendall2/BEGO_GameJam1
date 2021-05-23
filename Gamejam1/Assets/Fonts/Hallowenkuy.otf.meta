@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: cd7d51972b05bef438685d8060de95f7
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Hallowenkuy
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: bd4db6438ba6152448b0df044c7a9fb1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

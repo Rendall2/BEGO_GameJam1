@@ -10,6 +10,10 @@ TagManager:
   - Fl
   - SpikeCube
   - Spike
+  - TapToPlayCanvas
+  - GameOverCanvas
+  - LevelCompletedCanvas
+  - GameManager
   layers:
   - Default
   - TransparentFX

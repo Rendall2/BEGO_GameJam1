@@ -17,6 +17,13 @@ public class PlayerInputs : MonoBehaviour
     SceneLoader sceneLoader;
     public bool isLevelFailed = false;
     public GameObject[] spikes;
+    GameManager gameManager;
+    private Canvas tapToPlayCanvas;
+    private Canvas levelCompletedCanvas;
+    private Canvas gameOverCanvas;
+    private ParticleSystem particleEffect;
+    FollowPlayer camScript;
+
 
 
     [Range (0.5f,10f)]
@@ -50,28 +57,61 @@ public class PlayerInputs : MonoBehaviour
     {
         playerAnimator = GetComponentInChildren<Animator>();
         sceneLoader = FindObjectOfType<SceneLoader>();
+        tapToPlayCanvas = GameObject.FindWithTag("TapToPlayCanvas").GetComponent<Canvas>();
+        gameOverCanvas = GameObject.FindWithTag("GameOverCanvas").GetComponent<Canvas>();
+        levelCompletedCanvas = GameObject.FindWithTag("LevelCompletedCanvas").GetComponent<Canvas>();
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        gameManager.setGameOver(false);
+        tapToPlayCanvas.enabled = true;
+        gameOverCanvas.enabled = false;
+        levelCompletedCanvas.enabled = false;
+        particleEffect = transform.GetComponentInChildren<ParticleSystem>();
+        camScript = GameObject.FindWithTag("MainCamera").GetComponent <FollowPlayer>();
     }
 
 
     private void FixedUpdate()
     
     {
-        if (isRunning == true)
+        if (gameManager.getIsGameStarted())
         {
-            Run();
-        }
+            if (isRunning == true)
+            {
+                Run();
+            }
 
-        ControlXaxis();
+            ControlXaxis();
+        }
+        
 
     }
     private void Update()
     {
-        Swipe();
-       
+        if (gameManager.getGameOver() == false && gameManager.getIsLevelCompleted() == false)
+        {
+            Swipe();
+        }
+
+        
+
+    }
+
+    public void OnRetryButtonTapped()
+    {
+        gameManager.setGameOver(false);
+        PlayAgain();
+    }
+
+    public void OnNextLevelButtonTapped()
+    {
+        gameManager.setIsLevelCompleted(false);
+        StartCoroutine(NextLevelCoroutine());
+        
     }
 
     private void Run()
     {
+        playerAnimator.SetTrigger("IsRunning");
         transform.Translate(transform.forward * runSpeed * Time.deltaTime);
     }
 
@@ -79,6 +119,8 @@ public class PlayerInputs : MonoBehaviour
     {
         if (Input.touches.Length > 0)
         {
+            gameManager.setIsGameStarted(true);
+            tapToPlayCanvas.enabled = false;
             Touch t = Input.GetTouch(0);
             if (t.phase == TouchPhase.Began)
             {
@@ -209,10 +251,14 @@ public class PlayerInputs : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Fl")
+        if (collision.gameObject.tag == "Fl")
         {
             jumpCount = 0;
         }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+
 
         if (collision.gameObject.tag == "SpikeCube")
         {
@@ -221,7 +267,18 @@ public class PlayerInputs : MonoBehaviour
             {
                 collision.gameObject.GetComponent<MeshRenderer>().enabled = true;
             }
-            StartCoroutine(LevelFailed());
+
+            if(particleEffect.isPlaying == false)
+            {
+                StartCoroutine(PlayEffect());
+            }
+         
+            gameManager.setGameOver(true);
+            isRunning = false;
+            playerAnimator.ResetTrigger("IsRunning");
+            playerAnimator.SetTrigger("IsDie");
+            gameOverCanvas.enabled = true;
+            camScript.enabled = false;
         }
 
         if (collision.gameObject.tag == "Spike")
@@ -230,16 +287,63 @@ public class PlayerInputs : MonoBehaviour
             {
                 spikes[i].SetActive(true);
             }
-            StartCoroutine(LevelFailed());
+
+            if (particleEffect.isPlaying == false)
+            {
+                StartCoroutine(PlayEffect());
+            }
+            gameManager.setGameOver(true);
+            isRunning = false;
+            playerAnimator.ResetTrigger("IsRunning");
+            playerAnimator.SetTrigger("IsDie");
+            gameOverCanvas.enabled = true;
+            camScript.enabled = false;
+
         }
     }
     IEnumerator LevelFailed()
     {
-        isLevelFailed = true;
-        yield return new WaitForSeconds(1);
-        sceneLoader.loadCurrentScene();
+        if (gameManager.getGameOver() == false)
+        {
+            yield return new WaitForSeconds(0.3f);
+            sceneLoader.loadCurrentScene();
+        }
+
     }
 
+    IEnumerator NextLevelCoroutine()
+    {
+        if (gameManager.getIsLevelCompleted() == false)
+        {
+            yield return new WaitForSeconds(0.3f);
+            sceneLoader.loadNextScene();
+        }
+
+    }
+
+    IEnumerator PlayEffect()
+    {
+        particleEffect.Play();
+        transform.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        particleEffect.Stop();
+        Destroy(particleEffect);
+    }
+
+    private void PlayAgain()
+    {
+        StartCoroutine("LevelFailed");
+    }
+
+    public void NextLevel()
+    {
+        isRunning = false;
+        playerAnimator.ResetTrigger("IsRunning");
+        playerAnimator.SetTrigger("IsDie");
+        gameManager.setIsLevelCompleted(true);
+        levelCompletedCanvas.enabled = true;
+        camScript.enabled = false;
+    }
     private void ControlXaxis()
     {
         if (transform.position.x > 1.06f)
@@ -252,6 +356,4 @@ public class PlayerInputs : MonoBehaviour
             transform.position = new Vector3(-1.085f, transform.position.y, transform.position.z);
         }
     }
-
-
 }

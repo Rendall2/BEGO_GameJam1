@@ -6,37 +6,37 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedScenePath-0:
-      value: 22424703114646680e0b0227036c6c111b07142f1f2b233e2867083debf42d
-      flags: 0
-    RecentlyUsedScenePath-1:
-      value: 22424703114646680e0b0227036c701e03052b292926237e38271427fb
-      flags: 0
-    RecentlyUsedScenePath-2:
       value: 22424703114646680e0b0227036c72111f192b292926237e38271427fb
       flags: 0
-    RecentlyUsedScenePath-3:
+    RecentlyUsedScenePath-1:
       value: 224247031146467a1e1d09365016511c1914136a616875146d190f3cf6ef2021f2ee38eea8093c393707fc73373f0c2ffe0f3a08f3050f450400f41a08
       flags: 0
-    RecentlyUsedScenePath-4:
+    RecentlyUsedScenePath-2:
       value: 22424703114646680e0b0227036c7a1713241b2f222d68252320092a
       flags: 0
-    RecentlyUsedScenePath-5:
+    RecentlyUsedScenePath-3:
       value: 224247031146467a1d0f1e361d265104293317253e67153328271820add33d35f2eb33d6c335302e7717e1351027
+      flags: 0
+    RecentlyUsedScenePath-4:
+      value: 22424703114646680e0b0227036c7d0505122b292926237e38271427fb
+      flags: 0
+    RecentlyUsedScenePath-5:
+      value: 22424703114646680e0b0227036c7017031b1b2b221b2535232c5326ece92021
       flags: 0
     RecentlyUsedScenePath-6:
       value: 22424703114646680e0b0227036c731500121478623d28393930
       flags: 0
     RecentlyUsedScenePath-7:
-      value: 22424703114646680e0b0227036c7d0505122b292926237e38271427fb
+      value: 22424703114646680e0b0227036c731500121478032633220a281029e7ac7a2decee22f0
       flags: 0
     RecentlyUsedScenePath-8:
-      value: 22424703114646680e0b0227036c7017031b1b2b221b2535232c5326ece92021
+      value: 22424703114646680e0b0227036c73150012147b032633220a281029e7ae2136ebf32f
       flags: 0
     RecentlyUsedScenePath-9:
       value: 22424703114646680e0b0227036c73150012147b623d28393930
       flags: 0
     UnityRemoteDevice:
-      value: 225f4d46245b0d4902070862342649191512
+      value: 530104565d04590a405e5c73457007454f464c7a7878766108
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
