@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
 
-
     public void loadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

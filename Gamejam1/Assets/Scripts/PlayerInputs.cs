@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerInputs : MonoBehaviour
 {
     private Animator playerAnimator;
@@ -23,7 +24,7 @@ public class PlayerInputs : MonoBehaviour
     public GameObject finalTrap;
     public GameObject finalTrap1;
     Renderer[] roads;
-    GameManager gameManager;
+    public GameManager gameManager;
     private Canvas tapToPlayCanvas;
     private Canvas levelCompletedCanvas;
     private Canvas gameOverCanvas;
@@ -107,18 +108,6 @@ public class PlayerInputs : MonoBehaviour
 
     }
 
-    public void OnRetryButtonTapped()
-    {
-        gameManager.setGameOver(false);
-        PlayAgain();
-    }
-
-    public void OnNextLevelButtonTapped()
-    {
-        gameManager.setIsLevelCompleted(false);
-        StartCoroutine(NextLevelCoroutine());
-
-    }
 
     private void Run()
     {
@@ -324,7 +313,7 @@ public class PlayerInputs : MonoBehaviour
 
     }
 
-    IEnumerator NextLevelCoroutine()
+    public IEnumerator NextLevelCoroutine()
     {
         if (gameManager.getIsLevelCompleted() == false)
         {
@@ -342,7 +331,7 @@ public class PlayerInputs : MonoBehaviour
         particleEffect.Stop();
     }
 
-    private void PlayAgain()
+    public void PlayAgain()
     {
         StartCoroutine("LevelFailed");
     }
