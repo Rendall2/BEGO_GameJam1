@@ -1164,12 +1164,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 324945628}
   m_CullTransparentMesh: 1
---- !u!23 &330712747 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 204401027980481018, guid: ec052d0cc299cc14c973744ec07a1ff1,
-    type: 3}
-  m_PrefabInstance: {fileID: 204401027261732573}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330738584 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5351673787967781165, guid: 04425ee8858d9d84a82b7117a314c6b1,
@@ -5479,38 +5473,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: transitionTime
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: roads.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: runLeftAnimSpeed
-      value: 0.765
-      objectReference: {fileID: 0}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: runRightAnimSpeed
-      value: 0.765
-      objectReference: {fileID: 0}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: spikes.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: roads.Array.data[0]
-      value: 
-      objectReference: {fileID: 330712747}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: roads.Array.data[1]
-      value: 
-      objectReference: {fileID: 1593327809}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: roads.Array.data[2]
-      value: 
-      objectReference: {fileID: 735161032}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
       propertyPath: spikes.Array.data[0]
       value: 
       objectReference: {fileID: 857857599691873638}
@@ -5522,18 +5484,6 @@ PrefabInstance:
       propertyPath: spikes.Array.data[2]
       value: 
       objectReference: {fileID: 857857599691873636}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: spikes.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: swipeVelocityPerTime
-      value: 0.87
-      objectReference: {fileID: 0}
-    - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: cubeSpikes.Array.size
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 803295368, guid: 34993209cc13e475999759793043db60, type: 3}
       propertyPath: cubeSpikes.Array.data[0]
       value: 
@@ -5574,39 +5524,15 @@ PrefabInstance:
       propertyPath: cubeSpikes.Array.data[9]
       value: 
       objectReference: {fileID: 287589635}
-    - target: {fileID: 1568831796, guid: 34993209cc13e475999759793043db60, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3119862507923306962, guid: 34993209cc13e475999759793043db60,
         type: 3}
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
-    - target: {fileID: 3119862507923306962, guid: 34993209cc13e475999759793043db60,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
         type: 3}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3119862507923306965, guid: 34993209cc13e475999759793043db60,
         type: 3}
@@ -5657,11 +5583,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3119862507923306987, guid: 34993209cc13e475999759793043db60,
-        type: 3}
-      propertyPath: m_Mass
-      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34993209cc13e475999759793043db60, type: 3}
